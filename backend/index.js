@@ -1,6 +1,11 @@
 // const http = require('http')
 const express = require('express')
 const cors = require('cors')
+
+//
+const path = require('path');
+//
+
 const app = express()
 
 app.use(cors())
@@ -114,6 +119,21 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 // const PORT = 3001
+
 const PORT = process.env.PORT || 3001
+
+// Serve những file build của frontend (từ introdemo/dist)
+app.use(express.static(path.join(__dirname, 'public')));
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
+app.get(/^\/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+
+// API của backend
+// Ví dụ: app.use('/api', require('./routes/api'));
+
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
