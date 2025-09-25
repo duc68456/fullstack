@@ -31,14 +31,14 @@
 
 FROM node:18 AS frontend-builder
 WORKDIR /app/introdemo
-COPY introdemo/package*.json
+COPY introdemo/package*.json ./
 RUN npm install
 COPY introdemo ./
 RUN npm run build
 
 FROM node:18 AS backend-builder
 WORKDIR /app/backend
-COPY backend/package*.json
+COPY backend/package*.json ./
 RUN npm install
 COPY backend ./
 # RUN npm run dev
