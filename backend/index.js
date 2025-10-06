@@ -7,8 +7,8 @@ const Note = require('./models/note')
 // const mongoose = require('mongoose')
 
 //
-const path = require('path');
-const fs = require('fs');
+// const path = require('path')
+// const fs = require('fs')
 
 // const password = process.argv[2]
 //
@@ -54,23 +54,23 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger)
 
-let notes = [
-  {
-    id: "1",
-    content: "HTML is easy",
-    important: true
-  },
-  {
-    id: "2",
-    content: "Browser can execute only JavaScript",
-    important: false
-  },
-  {
-    id: "3",
-    content: "GET and POST are the most important methods of HTTP protocol",
-    important: true
-  }
-]
+// let notes = [
+//   {
+//     id: '1',
+//     content: 'HTML is easy',
+//     important: true
+//   },
+//   {
+//     id: '2',
+//     content: 'Browser can execute only JavaScript',
+//     important: false
+//   },
+//   {
+//     id: '3',
+//     content: 'GET and POST are the most important methods of HTTP protocol',
+//     important: true
+//   }
+// ]
 
 // app.get('/', (request, response) => {
 //   response.send('<h1>Hello World!</h1>')
@@ -107,40 +107,39 @@ app.get('/api/notes/:id', (request, response, next) => {
 // })
 app.delete('/api/notes/:id', (request, response, next) => {
   Note.findByIdAndDelete(request.params.id)
-    .then(result => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
 })
 
-const saveNotesToFile = () => {
-  const data = { notes: notes }
-  fs.writeFileSync(path.join(__dirname, '../introdemo/db.json'), JSON.stringify(data, null, 2))
-}
+// const saveNotesToFile = () => {
+//   const data = { notes: notes }
+//   fs.writeFileSync(path.join(__dirname, '../introdemo/db.json'), JSON.stringify(data, null, 2))
+// }
 
-const generateId = () => {
-  const maxId = notes.length > 0
-    ? Math.max(...notes.map(n => Number(n.id)))
-    : 0
-  return String(maxId + 1)
-}
+// const generateId = () => {
+//   const maxId = notes.length > 0
+//     ? Math.max(...notes.map(n => Number(n.id)))
+//     : 0
+//   return String(maxId + 1)
+// }
 
 // app.put('/api/notes/:id', (request, response) => {
 //   const id = request.params.id
 //   const body = request.body
-  
 //   const noteIndex = notes.findIndex(note => note.id === id)
-  
+
 //   if (noteIndex === -1) {
 //     return response.status(404).json({ error: 'note not found' })
 //   }
-  
+
 //   const updatedNote = {
 //     id: id,
 //     content: body.content,
 //     important: body.important
 //   }
-  
+
 //   notes[noteIndex] = updatedNote
 //   saveNotesToFile()
 //   response.json(updatedNote)
@@ -168,8 +167,8 @@ app.post('/api/notes', (request, response, next) => {
   const body = request.body
 
   if (!body.content) {
-    return response.status(400).json({ 
-      error: 'content missing' 
+    return response.status(400).json({
+      error: 'content missing'
     })
   }
 
@@ -183,7 +182,7 @@ app.post('/api/notes', (request, response, next) => {
   // response.json(note)
   note.save()
     .then(savedNote => {
-    response.json(savedNote)
+      response.json(savedNote)
     })
     .catch(error => next(error))
 
